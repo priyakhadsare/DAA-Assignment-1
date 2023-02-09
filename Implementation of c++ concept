@@ -1,3 +1,5 @@
+// Stack
+
 #include <iostream>
 using namespace std;
 int stack[100], n = 100, top = -1;
@@ -60,4 +62,407 @@ int main() {
       }
    }while(ch! = 4);
    return 0;
+}
+
+Queue
+#include <iostream>
+using namespace std;
+int queue[100], n = 100, front = - 1, rear = - 1;
+void Insert() {
+   int val;
+   if (rear == n - 1)
+   cout<<"Queue Overflow"<<endl;
+   else {
+      if (front == - 1)
+      front = 0;
+      cout<<"Insert the element in queue : "<<endl;
+      cin>>val;
+      rear++;
+      queue[rear] = val;
+   }
+}
+void Delete() {
+   if (front == - 1 || front > rear) {
+      cout<<"Queue Underflow ";
+      return ;
+   } else {
+      cout<<"Element deleted from queue is : "<< queue[front] <<endl;
+      front++;;
+   }
+}
+void Display() {
+   if (front == - 1)
+   cout<<"Queue is empty"<<endl;
+   else {
+      cout<<"Queue elements are : ";
+      for (int i = front; i <= rear; i++)
+      cout<<queue[i]<<" ";
+         cout<<endl;
+   }
+}
+int main() {
+   int ch;
+   cout<<"1) Insert element to queue"<<endl;
+   cout<<"2) Delete element from queue"<<endl;
+   cout<<"3) Display all the elements of queue"<<endl;
+   cout<<"4) Exit"<<endl;
+   do {
+      cout<<"Enter your choice : "<<endl;
+      cin>>ch;
+      switch (ch) {
+         case 1: Insert();
+         break;
+         case 2: Delete();
+         break;
+         case 3: Display();
+         break;
+         case 4: cout<<"Exit"<<endl;
+         break;
+         default: cout<<"Invalid choice"<<endl;
+      }
+   } while(ch!=4);
+   return 0;
+}
+
+//linkedlist
+#include <iostream>
+using namespace std;
+ 
+// Node class to represent
+// a node of the linked list.
+class Node {
+public:
+    int data;
+    Node* next;
+ 
+    // Default constructor
+    Node()
+    {
+        data = 0;
+        next = NULL;
+    }
+ 
+    // Parameterised Constructor
+    Node(int data)
+    {
+        this->data = data;
+        this->next = NULL;
+    }
+};
+ 
+// Linked list class to
+// implement a linked list.
+class Linkedlist {
+    Node* head;
+ 
+public:
+    // Default constructor
+    Linkedlist() { head = NULL; }
+ 
+    // Function to insert a
+    // node at the end of the
+    // linked list.
+    void insertNode(int);
+ 
+    // Function to print the
+    // linked list.
+    void printList();
+ 
+    // Function to delete the
+    // node at given position
+    void deleteNode(int);
+};
+ 
+// Function to delete the
+// node at given position
+void Linkedlist::deleteNode(int nodeOffset)
+{
+    Node *temp1 = head, *temp2 = NULL;
+    int ListLen = 0;
+ 
+    if (head == NULL) {
+        cout << "List empty." << endl;
+        return;
+    }
+ 
+    // Find length of the linked-list.
+    while (temp1 != NULL) {
+        temp1 = temp1->next;
+        ListLen++;
+    }
+ 
+    // Check if the position to be
+    // deleted is greater than the length
+    // of the linked list.
+    if (ListLen < nodeOffset) {
+        cout << "Index out of range"
+             << endl;
+        return;
+    }
+ 
+    // Declare temp1
+    temp1 = head;
+ 
+    // Deleting the head.
+    if (nodeOffset == 1) {
+ 
+        // Update head
+        head = head->next;
+        delete temp1;
+        return;
+    }
+ 
+    // Traverse the list to
+    // find the node to be deleted.
+    while (nodeOffset-- > 1) {
+ 
+        // Update temp2
+        temp2 = temp1;
+ 
+        // Update temp1
+        temp1 = temp1->next;
+    }
+ 
+    // Change the next pointer
+    // of the previous node.
+    temp2->next = temp1->next;
+ 
+    // Delete the node
+    delete temp1;
+}
+ 
+// Function to insert a new node.
+void Linkedlist::insertNode(int data)
+{
+    // Create the new Node.
+    Node* newNode = new Node(data);
+ 
+    // Assign to head
+    if (head == NULL) {
+        head = newNode;
+        return;
+    }
+ 
+    // Traverse till end of list
+    Node* temp = head;
+    while (temp->next != NULL) {
+ 
+        // Update temp
+        temp = temp->next;
+    }
+ 
+    // Insert at the last.
+    temp->next = newNode;
+}
+ 
+// Function to print the
+// nodes of the linked list.
+void Linkedlist::printList()
+{
+    Node* temp = head;
+ 
+    // Check for empty list.
+    if (head == NULL) {
+        cout << "List empty" << endl;
+        return;
+    }
+ 
+    // Traverse the list.
+    while (temp != NULL) {
+        cout << temp->data << " ";
+        temp = temp->next;
+    }
+}
+ 
+// Driver Code
+int main()
+{
+    Linkedlist list;
+ 
+    // Inserting nodes
+    list.insertNode(1);
+    list.insertNode(2);
+    list.insertNode(3);
+    list.insertNode(4);
+ 
+    cout << "Elements of the list are: ";
+ 
+    // Print the list
+    list.printList();
+    cout << endl;
+ 
+    // Delete node at position 2.
+    list.deleteNode(2);
+ 
+    cout << "Elements of the list are: ";
+    list.printList();
+    cout << endl;
+    return 0;
+}
+
+
+// Trees
+
+#include <bits/stdc++.h>
+using namespace std;
+class node {
+public:
+    char value;
+    node* left;
+    node* right;
+    node* next = NULL;
+    node(char c)
+    {
+        this->value = c;
+        left = NULL;
+        right = NULL;
+    }
+    node()
+    {
+        left = NULL;
+        right = NULL;
+    }
+    friend class Stack;
+    friend class expression_tree;
+};
+ 
+// Class stack to hold
+// tree nodes
+class Stack {
+    node* head = NULL;
+ 
+public:
+    void push(node*);
+    node* pop();
+    friend class expression_tree;
+};
+ 
+// Class to implement
+// inorder traversal
+class expression_tree {
+public:
+    // Function to implement
+    // inorder traversal
+    void inorder(node* x)
+    {
+        if (x == NULL)
+            return;
+        else {
+            inorder(x->left);
+            cout << x->value << "  ";
+            inorder(x->right);
+        }
+    }
+};
+ 
+// Function to push values
+// onto the stack
+void Stack::push(node* x)
+{
+    if (head == NULL) {
+        head = x;
+    }
+ 
+    // We are inserting nodes at
+    // the top of the stack [
+    // following LIFO principle]
+    else {
+        x->next = head;
+        head = x;
+    }
+}
+ 
+// Function to implement pop
+// operation in the stack
+node* Stack::pop()
+{
+    // Popping out the top most[
+    // pointed with head] element
+    node* p = head;
+    head = head->next;
+    return p;
+}
+ 
+// Driver code
+int main()
+{
+    // Postfix expression
+    string s = "ABC*+D/";
+ 
+    Stack e;
+    expression_tree a;
+    node *x, *y, *z;
+    int l = s.length();
+ 
+    for (int i = 0; i < l; i++) {
+        // if read character is operator
+        // then popping two other elements
+        // from stack and making a binary
+        // tree
+        if (s[i] == '+' || s[i] == '-'
+            || s[i] == '*' || s[i] == '/'
+            || s[i] == '^') {
+            z = new node(s[i]);
+            x = e.pop();
+            y = e.pop();
+            z->left = y;
+            z->right = x;
+            e.push(z);
+        }
+        else {
+            z = new node(s[i]);
+            e.push(z);
+        }
+    }
+ 
+    // Print the inorder traversal
+    cout << " The Inorder Traversal of Expression Tree: ";
+    a.inorder(z);
+    return 0;
+}
+
+//graph
+
+#include <iostream>
+#include <vector>
+#include <map>
+#include <string>
+
+using namespace std;
+
+struct vertex {
+    typedef pair<int, vertex*> ve;
+    vector<ve> adj; //cost of edge, destination vertex
+    string name;
+    vertex(string s) : name(s) {}
+};
+
+class graph
+{
+public:
+    typedef map<string, vertex *> vmap;
+    vmap work;
+    void addvertex(const string&);
+    void addedge(const string& from, const string& to, double cost);
+};
+
+void graph::addvertex(const string &name)
+{
+    vmap::iterator itr = work.find(name);
+    if (itr == work.end())
+    {
+        vertex *v;
+        v = new vertex(name);
+        work[name] = v;
+        return;
+    }
+    cout << "\nVertex already exists!";
+}
+
+void graph::addedge(const string& from, const string& to, double cost)
+{
+    vertex *f = (work.find(from)->second);
+    vertex *t = (work.find(to)->second);
+    pair<int, vertex *> edge = make_pair(cost, t);
+    f->adj.push_back(edge);
 }
